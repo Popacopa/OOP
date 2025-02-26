@@ -16,10 +16,10 @@ class Worker {
     bool operator<(const Worker& other) const {
         int len = std::min(name.length(), other.name.length());
         int i = 0;
-        while (i < len && name[i] == std::tolower(other.name[i])) {
+        while (i < len && std::tolower(name[i]) == std::tolower(other.name[i])) {
             i++;
         }
-        return name[i] < std::tolower(other.name[i]);
+        return std::tolower(name[i]) < std::tolower(other.name[i]);
     }
 
     // обновление данных от пользователя
