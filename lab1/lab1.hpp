@@ -7,6 +7,12 @@
 
 // класс Worker - информация о работнике
 class Worker {
+
+    // поля класса
+    std::string name;
+    std::string job;
+    int year;
+
     public:
     // конструктор
     Worker(std::string name = "none", std::string job = "none", int year = 2000)
@@ -35,7 +41,6 @@ class Worker {
 
     // вывод информации
     void printInfo() const {
-        //std::cout << "\n";
         std::cout << "\x1b[32mИмя:\x1b[32m " << name << "\n"
                   << "Должность: " << job << "\n"
                   << "Год принятия на работу: " << year << "\n";
@@ -51,13 +56,7 @@ class Worker {
     // сеттеры
     void setName(const std::string& name) { this->name = name; }
     void setJob(const std::string& job) { this->job = job; }
-    void setYear(int year) { this->year = year; }
-
-    private:
-    // поля класса
-    std::string name;
-    std::string job;
-    int year; 
+    void setYear(int year) { this->year = year; } 
 };
 
 // класс Workers - управление информацией о работниках
@@ -67,7 +66,6 @@ class Workers {
     std::vector<Worker> data;
 
     public: 
-    
     // добавить работника
     void append(Worker& person) {
         data.push_back(person);
@@ -95,25 +93,21 @@ class Workers {
         }
         
     }
-    
-    // вывести информацию
-    void printInfo() {
-        if (data.empty()) {std::cout << "\x1b[31mрабочих нет!" << "\x1b[0m" << "\n";}
-        for (int i = 0; i < data.size(); i++) {
-            data[i].printInfo();
-        }
-    }
 
     // обновить информацию
-    void update(int& num) {
+    int update(int& num) {
+        if (num < 1 || num > data.size()) {std::cout << "неверный ввод!"; return 1;}
         num--;
         data[num].updateFromConsole();
+        return 0;
     }
 
     // удалить работника
-    void remove(int& num) {
+    int remove(int& num) {
+        if (num < 1 || num > data.size()) {std::cout << "неверный ввод!"; return 1;}
          num--;
          data.erase(data.begin() + num);
+         return 0;
     }
 
     // сортировать
@@ -122,7 +116,7 @@ class Workers {
     }
 
     // поиск по имени
-    void search_withname(std::string& name) {
+    void search_withname(std::string& name) const {
         bool flag = 0;
         for (int i = 0; i < data.size(); i++) {
             if (name == data[i].getName()) {
@@ -134,7 +128,7 @@ class Workers {
     }
 
     // поиск по году
-    void search_withyear(int& in) {
+    void search_withyear(int& in) const {
         bool flag = 0;
         for (int i = 0; i < data.size(); i++) {
             if (in <= data[i].getYear()) {
@@ -146,7 +140,7 @@ class Workers {
     }
 
     // поиск по должности
-    void search_withjob(std::string& job) {
+    void search_withjob(std::string& job) const {
         bool flag = 0;
         for (int i = 0; i < data.size(); i++) {
             if (job == data[i].getJob()) {
@@ -155,5 +149,13 @@ class Workers {
             }
         }
          if (flag == 0) {std::cout << "\x1b[31mнет результатов!" << "\x1b[0m" << "\n";}
+    }
+
+    // вывести информацию
+    void printInfo() const {
+        if (data.empty()) {std::cout << "\x1b[31mрабочих нет!" << "\x1b[0m" << "\n";}
+        for (int i = 0; i < data.size(); i++) {
+            data[i].printInfo();
+        }
     }
 };
