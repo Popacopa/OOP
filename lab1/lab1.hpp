@@ -60,9 +60,14 @@ class Worker {
     int year; 
 };
 
-// структура Workers - управление информацией о работниках
-struct Workers {
+// класс Workers - управление информацией о работниках
+class Workers {
 
+    // вектор с информацией о работниках
+    std::vector<Worker> data;
+
+    public: 
+    
     // добавить работника
     void append(Worker& person) {
         data.push_back(person);
@@ -151,7 +156,4 @@ struct Workers {
         }
          if (flag == 0) {std::cout << "\x1b[31mнет результатов!" << "\x1b[0m" << "\n";}
     }
-
-    // вектор с информацией о работниках
-    std::vector<Worker> data;
 };
