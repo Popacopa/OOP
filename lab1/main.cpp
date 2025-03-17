@@ -13,7 +13,7 @@
 #include "src/workers.h"
 
 #define INPUT_ERR std::cout << "\x1b[31mневерный ввод!" << "\x1b[0m" << "\n"; std::cin.clear();
-#define FAIL_FLAG if (std::cin.fail()) {throw TypeError();}
+#define THROW if (std::cin.fail()) {std::cin.clear();std::cin.ignore();throw TypeError();}
 
 
 // Главная функция программы
@@ -26,14 +26,14 @@ int main(int argc, char const *argv[])
         try {                 
             std::cin >> check;
 
-            FAIL_FLAG                          // THROW!!!
+            THROW                          // THROW!!!
 
             if (check == 1) { 
                 std::cout << "1/0 консоль/файл: ";
                 int k = NULL; 
                 std::cin >> k;
 
-                FAIL_FLAG                              // THROW!!!
+                THROW                              // THROW!!!
 
                 if(k == 1) {
                     workers.append(workers.stdinput()); 
@@ -50,7 +50,7 @@ int main(int argc, char const *argv[])
                 int k; std::cout << "1/2/3 имя/должность/стаж: ";
                 std::cin >> k;
 
-                FAIL_FLAG                               // THROW!!!
+                THROW                               // THROW!!!
 
                 switch (k) {
                     case 1: 
@@ -77,7 +77,7 @@ int main(int argc, char const *argv[])
                             std::cout << "введите год устройства сотрудника(ов): ";
                             std::cin >> year;
 
-                            FAIL_FLAG                           // THROW!!!
+                            THROW                           // THROW!!!
 
                             workers.search_withyear(year);
                             break;
@@ -89,7 +89,7 @@ int main(int argc, char const *argv[])
                                     std::cout << "Порядковый номер изменяемого работника: ";
                                     int num; std::cin >> num;
 
-                                    FAIL_FLAG                   // THROW!!!
+                                    THROW                   // THROW!!!
 
                                     workers.update(num); 
                                     workers.printInfo(); 
@@ -97,7 +97,7 @@ int main(int argc, char const *argv[])
                                     std::cout << "Порядковый номер удаляемого работника: ";
                                     int num; std::cin >> num;
 
-                                    FAIL_FLAG                   // THROW!!!
+                                    THROW                   // THROW!!!
 
                                     workers.remove(num); 
                                     workers.printInfo(); 

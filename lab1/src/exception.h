@@ -6,10 +6,7 @@
 
 class TypeError {
     public:
-        TypeError() {
-                    std::cin.clear();
-                    std::cin.ignore();
-        }
+        TypeError() {}
         std::string what() {
                     return message;
         }
