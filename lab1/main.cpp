@@ -36,11 +36,9 @@ int main(int argc, char const *argv[])
                 THROW                              // THROW!!!
 
                 if(k == 1) {
-                    workers.append(workers.stdinput()); 
-                    //workers.sort(); 
+                    workers.append(workers.stdinput());  
                 } else if (!k) {
-                    workers.filein(); 
-                    //workers.sort(); 
+                    workers.filein();   
                     std::cout << "добавлено >>" << "\n\n";
                     workers.printInfo(); 
                 } else {
@@ -56,7 +54,7 @@ int main(int argc, char const *argv[])
                     case 1: 
                         {
                             std::string name;
-                            std::cout << "введите имя сотрудника(ов): ";
+                            std::cout << "введите имя сотрудника(ов): ";   
                             std::cin.ignore();
                             std::getline(std::cin, name);
                             workers.search_withname(name);
