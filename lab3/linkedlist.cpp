@@ -32,7 +32,7 @@ class LinkedList {
         Node* next = nullptr;
     };
 
-    
+    LinkedList() {}
     Node* right = nullptr;
     Node* left = nullptr;
 };
