@@ -6,13 +6,16 @@ struct value_t {
     int* date;
 };
 
-class Node {
-    value_t value;
+class Worker {
 public:
-    Node* next;
-    Node(const std::string& name,const std::string& job,const int date);
-    bool operator<(const Node& other) const;
+    value_t value;
+    Worker* next;
+    Worker(const std::string& name,const std::string& job,const int date);
+    bool operator<(const Worker& other) const;
+    bool operator>=(const Worker& other) const;
+    Worker operator=(Worker& other);
     void print() const;
+    void modify();
 };
 
 template<typename T>
@@ -47,39 +50,70 @@ public:
 
     //void sort() {}
     void print() const {for (auto i : *this) {i.print();}}
-    Iterator push_front(T& node) {
-                                if (head == nullptr) {
-                                    head = tail = &node;
-                                }
-                                else {
-                                    node.next = head;
-                                    head = &node;
-                                }
-                                return Iterator(&node);
+
+    Iterator push(T& node) {
+        T* ptr = head;
+        T* prev_ptr = head;
+        if (ptr == nullptr) {
+            head = tail = &node;
+            return Iterator(head);
+        }
+        while (node >= *ptr) {
+            prev_ptr = ptr;
+            ptr = ptr->next;
+            if (ptr == nullptr) {break;}
+        }
+        if (ptr == head) {node.next = ptr; head = &node; return Iterator(&node);}
+        prev_ptr->next = &node;
+        node.next = ptr;
+        if (ptr == nullptr) {
+            tail = &node;
+        }
+        return Iterator(&node);
     }
-    Iterator push_back(T& node) {
-                                if (head == nullptr) {
-                                    head = tail = &node;
-                                }
-                                else {
-                                    tail->next = &node;
-                                    tail = &node;
-                                }
-                                return Iterator(&node);
-    }
-    Iterator pop_back() {
+
+    Iterator popback() {
                                 T* tmp = head;
                                 while(tmp->next != tail) {
                                     tmp = tmp->next;
                                 }
                                 tmp->next = nullptr;
+                                //delete tail;
                                 tail = tmp;
                                 return tmp;
     }
-    Iterator pop_front() {
+    Iterator popfront() {
                                 T* tmp = head;
                                 head = head->next;
                                 delete tmp;
                                 return Iterator(head);
+    }
+
+    int del(const int& index) {
+        int count = 0;
+        if (index < 0) {return 1;}
+        for (auto& i : *this) {
+            if (count + 1 == index) {
+                T* tmp = i.next;
+                i.next = i.next->next;
+                delete tmp;
+                return 0;
+            }
+            if (count < index) {count++;}
+        }
+        return 1;
+    }
+
+    int mod(const int& index) {
+        int count = 0;
+        if (index < 0) {return 1;}
+        for (auto& i : *this) {
+            if (count == index) {
+                i.modify();
+                return 0;
+            }
+            if (count < index) {count++;}
+        }
+        return 1;
     }
 };
